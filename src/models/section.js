@@ -1,0 +1,52 @@
+"use strict";
+import { Model } from "sequelize";
+export default (sequelize, DataTypes) => {
+  class section extends Model {
+    static associate(models) {
+      section.hasMany(models.project_section, {
+        foreignKey: "section_id",
+        as: "project_sections",
+      });
+
+      section.hasMany(models.tasks, {
+        foreignKey: "section_id",
+        as: "tasks",
+      });
+    }
+  }
+  section.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      section_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      is_active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
+      status: {
+        type: DataTypes.ENUM(...STATUSES),
+        allowNull: false,
+        defaultValue: STATUSES[0],
+      },
+    },
+    {
+      sequelize,
+      modelName: "section",
+      tableName: "sections",
+      paranoid: true,
+      underscored: true,
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+      deletedAt: "deleted_at",
+    }
+  );
+  return section;
+};

@@ -1,0 +1,1 @@
+const STATUSES = ["active", "inactive"];
