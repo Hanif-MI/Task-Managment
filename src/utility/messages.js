@@ -7,10 +7,15 @@ export const MESSAGES = {
   REGISTER_SUCCESS: "User registered successfully",
   LOGIN_SUCCESS: "User logged in successfully",
 
+  ORGANIZATION_ADDED: "Organization added successfully",
+  ORGANIZATION_UPDATED: "Organization updated successfully",
   ///ERRORS
   FAILED_TO_CREATE_USER: "Failed to create user",
   INTERNAL_SERVER_ERROR: "Internal server error",
   ERROR_WHILE_CREATING_USER: "Error while creating user",
   ERROR_WHILE_FETCHING_USER: "Error while fetching user",
   INVALID_PASSWORD: "Invalid password",
+  ORGANIZATION_NOT_FOUND: "Organization not found",
+  ORGANIZATION_ALREADY_EXISTS: "Organization already exists",
+  
 };
