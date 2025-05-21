@@ -1,6 +1,6 @@
 "use strict";
 import { Model } from "sequelize";
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class user extends Model {
     static associate(models) {
       this.hasMany(models.task_assign, {
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         allowNull: false,
-        defaultValue: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         type: DataTypes.UUID,
       },
@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       is_active: {
         type: DataTypes.BOOLEAN,

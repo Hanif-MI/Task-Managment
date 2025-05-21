@@ -1,5 +1,6 @@
 "use strict";
 import { Model } from "sequelize";
+import { STATUSES } from "../utility/constant.js";
 export default (sequelize, DataTypes) => {
   class project extends Model {
     static associate(models) {

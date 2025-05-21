@@ -1,6 +1,6 @@
 "use strict";
 import { Model } from "sequelize";
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class task extends Model {
     static associate(models) {
       this.hasMany(models.task_assign, {
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      project_section_id: {
+      section_id: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {

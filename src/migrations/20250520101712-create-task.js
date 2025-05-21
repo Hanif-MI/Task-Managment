@@ -25,7 +25,7 @@ export default {
           key: 'id',
         },
       },
-      project_section_id: {
+      section_id: {
         type: Sequelize.UUID,
         allowNull : false,
         references: {

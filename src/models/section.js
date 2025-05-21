@@ -1,14 +1,15 @@
 "use strict";
 import { Model } from "sequelize";
+import { STATUSES } from "../utility/constant.js";
 export default (sequelize, DataTypes) => {
   class section extends Model {
     static associate(models) {
-      section.hasMany(models.project_section, {
+      this.hasMany(models.project_section, {
         foreignKey: "section_id",
         as: "project_sections",
       });
 
-      section.hasMany(models.tasks, {
+      this.hasMany(models.task, {
         foreignKey: "section_id",
         as: "tasks",
       });
