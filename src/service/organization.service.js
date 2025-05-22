@@ -100,4 +100,18 @@ const getOrganization = async (where) => {
   }
 };
 
-export { addUpdateOrganizationService, getOrganizationsService };
+const getOrganizationById = async (where) => {
+  try {
+    const result = await organization.findOne({ where });
+    return result;
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    throw new ApiError(500, MESSAGES.INTERNAL_SERVER_ERROR + error);
+  }
+};
+
+export {
+  addUpdateOrganizationService,
+  getOrganizationsService,
+  getOrganizationById,
+};

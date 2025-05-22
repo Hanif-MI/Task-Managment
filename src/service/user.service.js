@@ -1,6 +1,4 @@
-import { raw } from "express";
 import db from "../models/index.js";
-const user = db.user;
 import { ApiError } from "../utility/api-error.js";
 import {
   comparePassword,
@@ -9,9 +7,11 @@ import {
 } from "../utility/helper.js";
 import { MESSAGES } from "../utility/messages.js";
 
+const user = db.user;
+
 const registerService = async (name, email, password, type) => {
   try {
-    const existingUser = await getUserByEmail(email);
+    const existingUser = await getUserByEmail({email});
     if (existingUser) {
       throw new ApiError(409, MESSAGES.USER_ALREADY_EXISTS);
     }
@@ -30,7 +30,7 @@ const registerService = async (name, email, password, type) => {
 
 const loginService = async (email, inputPassword) => {
   try {
-    const existingUser = await getUserByEmail(email, [
+    const existingUser = await getUserByEmail({email}, [
       "id",
       "name",
       "password",
@@ -71,10 +71,11 @@ const insertUser = async (name, email, password, type) => {
   }
 };
 
-const getUserByEmail = async (email, attributes) => {
+const getUserByEmail = async (where, attributes) => {
+  where = { ...where, is_active: true };
   try {
     const userData = await user.findOne({
-      where: { email: email, is_active: true },
+      where,
       attributes,
       raw: true,
     });
@@ -84,4 +85,5 @@ const getUserByEmail = async (email, attributes) => {
   }
 };
 
-export default { registerService, loginService };
+
+export { registerService, loginService, getUserByEmail };

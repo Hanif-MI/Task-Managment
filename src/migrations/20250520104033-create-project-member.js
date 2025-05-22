@@ -7,7 +7,7 @@ export default {
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
       },
       project_id: {
         type: Sequelize.UUID,
