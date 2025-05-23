@@ -9,4 +9,10 @@ const projectSchema = Joi.object({
   status: Joi.string().valid("active", "inactive").optional(),
 });
 
-export { projectSchema}
+const AddProjectSchema = Joi.object({
+  projectId: Joi.string().required(),
+  userId: Joi.string().required(),
+});
+
+
+export { projectSchema, AddProjectSchema };

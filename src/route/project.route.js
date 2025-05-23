@@ -7,8 +7,15 @@ import {
 } from "../controller/project.controller.js";
 import authMiddleware from "../middleware/auth.middleware.js";
 import { USER_ACCESS } from "../utility/constant.js";
-import { validate } from "../middleware/validation.middleware.js";
-import { projectSchema } from "../validation/project.validation.js";
+import {
+  validate,
+  ValidationTarget,
+} from "../middleware/validation.middleware.js";
+import {
+  AddProjectSchema,
+  projectSchema,
+} from "../validation/project.validation.js";
+import { idSchema } from "../validation/common.validation.js";
 
 export const projectRouter = express.Router();
 projectRouter.post(
@@ -17,6 +24,20 @@ projectRouter.post(
   validate(projectSchema),
   addUpdateProject
 );
-projectRouter.get("/getProjects", getProjects);
-projectRouter.post("/add-member-to-project", addMemberToProject);
-projectRouter.delete("/remove-member-to-project", removeMemberFromProject);
+projectRouter.get(
+  "/getProjects",
+  authMiddleware(USER_ACCESS.ADMIN),
+  getProjects
+);
+projectRouter.post(
+  "/add-member-to-project",
+  authMiddleware(USER_ACCESS.ADMIN),
+  validate(AddProjectSchema),
+  addMemberToProject
+);
+projectRouter.delete(
+  "/remove-member-to-project",
+  authMiddleware(USER_ACCESS.ADMIN),
+  validate(idSchema, ValidationTarget.QUERY),
+  removeMemberFromProject
+);

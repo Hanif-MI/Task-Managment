@@ -29,13 +29,18 @@ const getProjects = async (req, res, next) => {
   try {
     const { page = 1, limit = 10, user_id } = req.query;
     const offset = (page - 1) * limit;
-    const result = await getProjectsService(limit, offset, user_id);
+    let data = await getProjectsService(limit, offset, user_id);
+    const result = data.rows.map((item) => item.get({ plain: true }));
+    for (let item of result) {
+      item.sections = item.sections.map((sec) => sec.section.section_name);
+    }
+
     res.send(
       new ApiResponse(200, {
-        data: result.rows,
-        total: result.count,
+        data: result,
+        total: data.count,
         page: parseInt(page),
-        totalPages: Math.ceil(result.count / limit),
+        totalPages: Math.ceil(data.count / limit),
       })
     );
   } catch (error) {
@@ -58,7 +63,9 @@ const removeMemberFromProject = async (req, res, next) => {
     const { id } = req.query;
     const result = await removeMemberFromProjectService(id);
     if (!result) {
-      return res.send(new ApiResponse(404, null, MESSAGES.MEMBER_ERROR_WHILE_DELETING));
+      return res.send(
+        new ApiResponse(404, null, MESSAGES.MEMBER_ERROR_WHILE_DELETING)
+      );
     }
     res.send(new ApiResponse(200, result, MESSAGES.MEMBER_REMOVED_SUCCESS));
   } catch (error) {

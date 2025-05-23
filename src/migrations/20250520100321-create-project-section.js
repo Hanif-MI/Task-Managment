@@ -23,7 +23,6 @@ export default {
           model: "sections",
           key: "id",
         },
-        unique: true,
       },
       is_active: {
         type: Sequelize.BOOLEAN,

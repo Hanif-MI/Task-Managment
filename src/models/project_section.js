@@ -22,7 +22,7 @@ export default (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
       },
       project_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: "projects",
@@ -30,9 +30,8 @@ export default (sequelize, DataTypes) => {
         },
       },
       section_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false,
-        unique: true,
         references: {
           model: "sections",
           key: "id",

@@ -3,9 +3,9 @@ import { getOrganizationById } from "./organization.service.js";
 import { ApiError } from "../utility/api-error.js";
 import { MESSAGES } from "../utility/messages.js";
 import { getUserByEmail } from "./user.service.js";
-import { where } from "sequelize";
+import { raw } from "express";
 
-const { project, project_member, user } = db;
+const { project, project_member, user, project_section, section } = db;
 
 const addUpdateProjectService = async (params) => {
   const {
@@ -63,13 +63,25 @@ const getProjectsService = async (limit, offset, userId) => {
           },
         ],
       },
-    ]; 
+      {
+        model: project_section,
+        as: "sections",
+        attributes: ["id"],
+        include: [
+          {
+            model: section,
+            as: "section",
+            attributes: ["id", "section_name"],
+          },
+        ],
+      },
+    ];
     if (userId) {
       include[0].where = {
         member_id: userId,
       };
     }
-    const result = await project.findAndCountAll({
+    let result = await project.findAndCountAll({
       where: {
         is_active: true,
       },
