@@ -15,4 +15,11 @@ const assignTaskToMemberSchema = Joi.object({
   member_id: Joi.string().required(),
 });
 
-export { taskSchema,assignTaskToMemberSchema };
+const getTasksSchema = Joi.object({
+  limit: Joi.number().integer().min(1).default(10),
+  page: Joi.number().integer().min(1).default(1),
+  project_id: Joi.string().required(),
+  section_id: Joi.string().optional(),
+});
+
+export { taskSchema, assignTaskToMemberSchema, getTasksSchema };

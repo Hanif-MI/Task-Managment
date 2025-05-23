@@ -10,6 +10,7 @@ import { USER_ACCESS } from "../utility/constant.js";
 import { validate, ValidationTarget } from "../middleware/validation.middleware.js";
 import {
   assignTaskToMemberSchema,
+  getTasksSchema,
   taskSchema,
 } from "../validation/task.validation.js";
 import { idSchema } from "../validation/common.validation.js";
@@ -22,7 +23,7 @@ taskRouter.post(
   validate(taskSchema),
   addUpdateTask
 );
-taskRouter.get("/getTasks", authMiddleware(), getTasks);
+taskRouter.get("/getTasks", authMiddleware(), validate(getTasksSchema,ValidationTarget.QUERY),getTasks);
 taskRouter.post(
   "/assignTaskToMember",
   authMiddleware(USER_ACCESS.ADMIN),

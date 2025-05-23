@@ -5,6 +5,7 @@ import db from "../models/index.js";
 
 const { task, task_assign, user } = db;
 import { ApiError } from "../utility/api-error.js";
+import { where } from "sequelize";
 
 const addUpdateTaskService = async (
   id,
@@ -65,11 +66,24 @@ const addUpdateTaskService = async (
   }
 };
 
-const getTasksService = async (limit, offset) => {
+const getTasksService = async (limit, offset, project_id, section_id) => {
   try {
+    let where = {};
+    if (project_id) {
+      where = {
+        project_id,
+      };
+    }
+    if (section_id) {
+      where = {
+        ...where,
+        section_id,
+      };
+    }
     const result = await task.findAndCountAll({
       limit,
       offset,
+      where,
       order: [["created_at", "DESC"]],
       include: [
         {

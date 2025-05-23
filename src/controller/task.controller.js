@@ -43,8 +43,8 @@ const addUpdateTask = async (req, res, next) => {
 
 const getTasks = async (req, res, next) => {
   try {
-    const { limit, offset } = req.query;
-    const result = await getTasksService(limit, offset);
+    const { limit, offset, project_id, section_id } = req.query;
+    const result = await getTasksService(limit, offset, project_id, section_id);
     res.send(new ApiResponse(200, result, MESSAGES.TASK_FETCHED_SUCCESS));
   } catch (error) {
     next(error);
