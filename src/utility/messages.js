@@ -50,11 +50,18 @@ export const MESSAGES = {
 
   MEMBER_ID_NOT_VALID: "Project member ID is not valid",
   SECTION_NOT_FOUND: "Section not found",
+  SECTION_NOT_FOUND_IN_PROJECT : "Section not found in project. Please add the section in the project first.",
   SECTION_ALREADY_EXISTS: "Section already exists",
   ERROR_WHILE_FETCHING_SECTION: "Error while fetching section",
   ERROR_WHILE_ADDING_SECTION: "Error while adding section",
   
   SECTION_ALREADY_ADDED_TO_PROJECT: "Section already added to project",
+
+  ORGANIZATION_DELETED: "Organization deleted successfully",
+  PROJECT_DELETED: "Project deleted successfully",
+  SECTION_DELETED: "Section deleted successfully",
+  TASK_DELETED: "Task deleted successfully",
+  
 
   TASK_NOT_FOUND: "Task not found",
   TASK_ALREADY_EXISTS: "Task already exists",

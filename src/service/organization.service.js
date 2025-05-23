@@ -45,6 +45,25 @@ const getOrganizationsService = async (limit, offset) => {
   }
 };
 
+const deleteOrganizationService = async (id) => {
+  try {
+    const getOrganization = await getOrganizationById({
+      id,
+    });
+    if (!getOrganization) {
+      throw new ApiError(404, MESSAGES.ORGANIZATION_NOT_FOUND);
+    }
+    await getOrganization.update({
+      is_active: false,
+    });
+    const result = await getOrganization.destroy();
+    return result;
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    throw new ApiError(500, MESSAGES.INTERNAL_SERVER_ERROR, error);
+  }
+};
+
 const addOrganizationService = async (name, description, is_active, status) => {
   try {
     const result = await organization.create({
@@ -114,4 +133,5 @@ export {
   addUpdateOrganizationService,
   getOrganizationsService,
   getOrganizationById,
+  deleteOrganizationService
 };

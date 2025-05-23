@@ -10,8 +10,8 @@ const projectSchema = Joi.object({
 });
 
 const AddProjectSchema = Joi.object({
-  projectId: Joi.string().required(),
-  userId: Joi.string().required(),
+  project_id: Joi.string().required(),
+  user_id: Joi.string().required(),
 });
 
 

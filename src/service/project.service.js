@@ -4,8 +4,9 @@ import { ApiError } from "../utility/api-error.js";
 import { MESSAGES } from "../utility/messages.js";
 import { getUserByEmail } from "./user.service.js";
 import { raw } from "express";
+import { where } from "sequelize";
 
-const { project, project_member, user, project_section, section } = db;
+const { project, project_member, user, project_section, section, task } = db;
 
 const addUpdateProjectService = async (params) => {
   const {
@@ -57,6 +58,7 @@ const getProjectsService = async (limit, offset, userId) => {
         attributes: ["id", "member_id"],
         include: [
           {
+            where : {"is_active" : true},
             model: user,
             as: "member",
             attributes: ["id", "name", "email"],
@@ -75,6 +77,10 @@ const getProjectsService = async (limit, offset, userId) => {
           },
         ],
       },
+      {
+        model: task,
+        as: "tasks",
+      },
     ];
     if (userId) {
       include[0].where = {
@@ -90,6 +96,23 @@ const getProjectsService = async (limit, offset, userId) => {
       include,
       order: [["created_at", "DESC"]],
     });
+    return result;
+  } catch (error) {
+    if (error instanceof ApiError) throw error;
+    throw new ApiError(500, MESSAGES.INTERNAL_SERVER_ERROR + error);
+  }
+};
+
+const deleteProjectService = async (id) => {
+  try {
+    const existingProject = await getProject({ id });
+    if (!existingProject) {
+      throw new ApiError(404, MESSAGES.PROJECT_NOT_FOUND);
+    }
+    await existingProject.update({
+      is_active: false,
+    });
+    const result = await existingProject.destroy();
     return result;
   } catch (error) {
     if (error instanceof ApiError) throw error;
@@ -193,5 +216,6 @@ export {
   getProject,
   addMemberToProjectService,
   removeMemberFromProjectService,
-  getMemberFromProjectById
+  getMemberFromProjectById,
+  deleteProjectService,
 };

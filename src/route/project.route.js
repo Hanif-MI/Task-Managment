@@ -2,6 +2,7 @@ import express from "express";
 import {
   addMemberToProject,
   addUpdateProject,
+  deleteProject,
   getProjects,
   removeMemberFromProject,
 } from "../controller/project.controller.js";
@@ -28,6 +29,12 @@ projectRouter.get(
   "/getProjects",
   authMiddleware(USER_ACCESS.ADMIN),
   getProjects
+);
+projectRouter.delete(
+  "/deleteProject",
+  authMiddleware(USER_ACCESS.ADMIN),
+  validate(idSchema, ValidationTarget.QUERY),
+  deleteProject
 );
 projectRouter.post(
   "/add-member-to-project",

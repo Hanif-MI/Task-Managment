@@ -1,6 +1,6 @@
 import { MESSAGES } from "../utility/messages.js";
 import { getMemberFromProjectById, getProject } from "./project.service.js";
-import { getSection } from "./section.service.js";
+import { getProjectSection, getSection } from "./section.service.js";
 import db from "../models/index.js";
 
 const { task, task_assign, user } = db;
@@ -35,6 +35,15 @@ const addUpdateTaskService = async (
       throw new ApiError(404, MESSAGES.SECTION_NOT_FOUND);
     }
 
+    const isHaveTheSectionInProject = await getProjectSection({
+      project_id,
+      section_id,
+    });
+
+    if (!isHaveTheSectionInProject) {
+      throw new ApiError(404, MESSAGES.SECTION_NOT_FOUND_IN_PROJECT);
+    }
+
     if (id) {
       const existingTask = await getTask({ id });
       if (!existingTask) {
@@ -52,7 +61,7 @@ const addUpdateTaskService = async (
     return result;
   } catch (error) {
     if (error instanceof ApiError) throw error;
-    throw new ApiError(500, MESSAGES.INTERNAL_SERVER_ERROR +  error);
+    throw new ApiError(500, MESSAGES.INTERNAL_SERVER_ERROR + error);
   }
 };
 
@@ -145,7 +154,7 @@ const removeTaskFromMemberService = async (id) => {
 const createTask = async (taskData) => {
   const result = await task.create(taskData);
   return result;
-}
+};
 
 const getTask = async (where) => {
   const result = await task.findOne({ where });
@@ -157,4 +166,9 @@ const updateTask = async (where, taskData) => {
   return result;
 };
 
-export { addUpdateTaskService, getTasksService ,assignTaskToMemberService, removeTaskFromMemberService };
+export {
+  addUpdateTaskService,
+  getTasksService,
+  assignTaskToMemberService,
+  removeTaskFromMemberService,
+};

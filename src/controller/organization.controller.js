@@ -1,5 +1,6 @@
 import {
   addUpdateOrganizationService,
+  deleteOrganizationService,
   getOrganizationsService,
 } from "../service/organization.service.js";
 import { ApiResponse } from "../utility/api-response.js";
@@ -47,4 +48,16 @@ const getOrganizations = async (req, res, next) => {
   }
 };
 
-export { addUpdateOrganization, getOrganizations };
+const deleteOrganization =  async(req, res, next) => {
+  try {
+    const { id } = req.query;
+    const result = await deleteOrganizationService(id);
+    return res.send(
+      new ApiResponse(200, result, MESSAGES.ORGANIZATION_DELETED)
+    );
+  } catch (error) {
+    next(error);
+  }
+}
+
+export { addUpdateOrganization, getOrganizations, deleteOrganization };

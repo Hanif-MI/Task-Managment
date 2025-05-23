@@ -1,6 +1,7 @@
 import {
   addMemberToProjectService,
   addUpdateProjectService,
+  deleteProjectService,
   getProjectsService,
   removeMemberFromProjectService,
 } from "../service/project.service.js";
@@ -48,10 +49,20 @@ const getProjects = async (req, res, next) => {
   }
 };
 
+const deleteProject = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    const result = await deleteProjectService(id);
+    res.send(new ApiResponse(200, result, MESSAGES.PROJECT_DELETED));
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addMemberToProject = async (req, res, next) => {
   try {
-    const { projectId, userId } = req.body;
-    const result = await addMemberToProjectService(projectId, userId);
+    const { project_id, user_id } = req.body;
+    const result = await addMemberToProjectService(project_id, user_id);
     res.send(new ApiResponse(200, result, MESSAGES.MEMBER_ADDED_SUCCESS));
   } catch (error) {
     next(error);
@@ -62,11 +73,6 @@ const removeMemberFromProject = async (req, res, next) => {
   try {
     const { id } = req.query;
     const result = await removeMemberFromProjectService(id);
-    if (!result) {
-      return res.send(
-        new ApiResponse(404, null, MESSAGES.MEMBER_ERROR_WHILE_DELETING)
-      );
-    }
     res.send(new ApiResponse(200, result, MESSAGES.MEMBER_REMOVED_SUCCESS));
   } catch (error) {
     next(error);
@@ -78,4 +84,5 @@ export {
   getProjects,
   addMemberToProject,
   removeMemberFromProject,
+  deleteProject,
 };
