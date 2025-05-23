@@ -21,7 +21,16 @@ export const MESSAGES = {
 
   SECTION_ADDED_TO_PROJECT_SECTION_ADDED_SUCCESS: "Section added to project section successfully",
   SECTION_REMOVED_FROM_PROJECT_SECTION_ADDED_SUCCESS: "Section removed from project section successfully",
-  
+
+  TASK_ADDED_SUCCESS: "Task added successfully",
+  TASK_UPDATED_SUCCESS: "Task updated successfully",
+  TASK_FETCHED_SUCCESS: "Tasks fetched successfully",
+
+  TASK_ASSIGNED_SUCCESS: "Task assigned successfully",
+  TASK_UNASSIGNED_SUCCESS: "Task unassigned successfully",
+  TASK_DELETED_SUCCESS: "Task deleted successfully",
+  TASK_FETCHED_SUCCESS: "Task fetched successfully",
+
   ///ERRORS
   FAILED_TO_CREATE_USER: "Failed to create user",
   INTERNAL_SERVER_ERROR: "Internal server error",
@@ -47,8 +56,17 @@ export const MESSAGES = {
   
   SECTION_ALREADY_ADDED_TO_PROJECT: "Section already added to project",
 
+  TASK_NOT_FOUND: "Task not found",
+  TASK_ALREADY_EXISTS: "Task already exists",
+  ERROR_WHILE_FETCHING_TASK: "Error while fetching task",
+  TASK_ALREADY_EXISTS: "Task already exists",
+  MEMBER_NOT_HAVE_ACCESS : "Member don't have access to this project",
+  TASK_ALREADY_ASSIGNED : "Task already assigned to member",
+
+
   AUTHORIZATION_HEADER_MISSING:"Authorization header is missing",
   TOKEN_MISSING: "Token is missing",
   INVALID_TOKEN : "Invalid or expired token",
   UNAUTHORIZED_ACCESS: "Unauthorized Access",
+  ENTER_VALID_ID: "Please enter valid ID",
 };

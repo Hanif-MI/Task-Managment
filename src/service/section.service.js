@@ -113,4 +113,5 @@ export {
   getAllSectionsService,
   addSectionToProjectService,
   removeSectionFromProjectService,
+  getSection
 };

@@ -193,4 +193,5 @@ export {
   getProject,
   addMemberToProjectService,
   removeMemberFromProjectService,
+  getMemberFromProjectById
 };

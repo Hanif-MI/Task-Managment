@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 export default {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('task_assign', {
+    await queryInterface.createTable('task_assigns', {
       id: {
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
